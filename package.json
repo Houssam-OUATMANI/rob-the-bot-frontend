@@ -1,13 +1,19 @@
 {
   "name": "frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.9.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview"
   },
+  "author": {
+    "name": "Houssam OUATMANI",
+    "email": "ouatmanihoussam@gmail.com",
+    "url" : "https://github.com/Houssam-OUATMANI/rob-the-bot-frontend"
+  },
+  
   "dependencies": {
     "@vueuse/core": "^10.10.1",
     "highlight.js": "^11.9.0",
