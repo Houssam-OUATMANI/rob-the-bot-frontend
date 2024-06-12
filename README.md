@@ -1,9 +1,46 @@
-# Vue 3 + TypeScript + Vite
+Sure! Below is a sample README file for a Vue.js web app that clones the ChatGPT web interface. This README assumes that you are using Bun as your package manager.
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+---
 
-## Recommended Setup
+# Rob The Bot - 
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+This project is a Vue.js web application that mimics the ChatGPT web interface. The app is built with Vue.js and uses Bun as the package manager.
 
-- Use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) for performing the same type checking from the command line, or for generating d.ts files for SFCs.
+## Table of Contents
+
+- [Installation](#installation)
+- [Development](#development)
+- [Build](#build)
+
+## Installation
+
+First, ensure that you have Bun installed. If you don't have Bun installed, you can install it by following the instructions on the [Bun website](https://bun.sh/).
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Houssam-OUATMANI/rob-the-bot-frontend.git
+cd rob-the-bot-frontend
+```
+
+Install the dependencies:
+
+```bash
+bun install
+```
+
+## Development
+
+To run the app in development mode, use the following command:
+
+```bash
+bun dev
+```
+## Build
+
+To build the project for production, run:
+
+```bash
+bun run build
+```
+This will create a `dist` directory containing the production build of the app.
