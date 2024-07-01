@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue"
+
 const props = defineProps(['chatHistory', 'IsDrawerOpen', 'chatId'])
 const emit = defineEmits(['OnChatAdd', 'OndeleteChat']);
 
@@ -23,11 +24,13 @@ const chatTitle = computed(() => {
                 <p>Chat History</p>
                 <div>
                     <RouterLink @click="$emit('OnChatAdd')" to="/"><span title="New Chat"
-                            class="pi pi-plus-circle  text-info inline"></span></RouterLink>
+                            class="pi pi-plus-circle  text-info inline"></span>
+                    </RouterLink>
                 </div>
             </li>
             <li v-for="(h, i) in props.chatHistory" :key="h._id" class="flex items-center justify-between flex-row">
                 <RouterLink 
+                    :title="h.title"
                     :to="{ name: 'history', params: { id: h._id } }" 
                     :class="h._id === props.chatId ? 'active' : ''">
                     {{ chatTitle[i] }}

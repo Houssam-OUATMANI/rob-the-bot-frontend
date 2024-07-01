@@ -23,6 +23,7 @@ const chatIdToDelete = ref<string | null>(null)
 const getModels = async () => {
   const response = await fetch(import.meta.env.VITE_MODELS_ENDPOINT)
   const data = await response.json()
+  console.log(data)
   models.value = data
   chosenModel.value = localStorage.getItem("model") || data[0]
 }
@@ -73,10 +74,35 @@ const deleteChat = async () => {
 }
 
 
+// Get Last Chat
+
+const getLastChat = async () => {
+  const response = await fetch(import.meta.env.VITE_LAST_CHAT_ENDPOINT)
+  const data = await response.json()
+  console.log(data)
+  //messages.value = data.content
+  router.push(`/chat/${data._id}`)
+  getChatByID(data._id)
+  getHistory()
+}
+
+const OndeleteAllChats = () => {
+  openDeleteModal.value = true;
+}
+
+const deleteAllChats = async () => {
+  openDeleteModal.value = false;
+  chatHistory.value = []
+  messages.value = []
+  await fetch(import.meta.env.VITE_CHAT_ENDPOINT, { method: 'DELETE' })
+  router.push("/")
+}
+
+
 // Watch URL ID update
 watch(() => route.params.id, (newId) => {
   chatId.value = newId as string;
-  getChatByID(chatId.value)
+  if(chatId.value) getChatByID(chatId.value)
 });
 
 
@@ -91,10 +117,11 @@ const modelAsTitle = computed(() => {
 })
 
 const submit = async () => {
-
+/*
   if (!chatId.value && messages.value.length === 0) {
     chatHistory.value.unshift({ _id: Date.now().toString(), title: userInput.value.trim() })
   }
+    */
   messages.value.push(messageFactory("USER", "user", userInput.value.trim()))
   userInput.value = ""
 
@@ -111,11 +138,19 @@ const submit = async () => {
   const decoder = new TextDecoder()
   while (true) {
     const { done, value } = await reader.read()
-    if (done) break
+    if (done) {
+       if(!chatId.value) {
+        await getLastChat()
+       }
+      break
+    }
+
     const text = decoder.decode(value)
     chatBotMessage.text += text
     messages.value = [...messages.value]
   }
+
+   console.log(response)
 }
 </script>
 
@@ -126,10 +161,19 @@ const submit = async () => {
         :modelAsTitle="modelAsTitle" />
 
       <VueChat :messages="messages" />
-      <VueDialog :openDeleteModal="openDeleteModal" @cancelDeleteChat="cancelDeleteChat" @deleteChat="deleteChat" />
+      <VueDialog 
+        :openDeleteModal="openDeleteModal"
+        @cancelDeleteChat="cancelDeleteChat"
+        @deleteChat="deleteChat"
+      />
       <VueForm v-model:userInput="userInput" @submit="submit" />
     </div>
-    <VueDrawer :chatHistory="chatHistory" :chatId="chatId" @OnChatAdd="OnChatAdd"
-      @OndeleteChat="(id: string) => OndeleteChat(id)" />
+    <VueDrawer 
+      :chatHistory="chatHistory"
+      :chatId="chatId"
+      @OnChatAdd="OnChatAdd"
+      @OndeleteChat="(id: string) => OndeleteChat(id)"
+      @OndeleteAllChats="OndeleteAllChats"
+      />
   </div>
 </template>

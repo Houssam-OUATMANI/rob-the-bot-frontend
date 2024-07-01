@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+
 
 const props = defineProps(['openDeleteModal'])
- defineEmits(['deleteChat', 'cancelDeleteChat']);
+ defineEmits(['deleteChat', 'cancelDeleteChat', 'deleteAllChats']);
 
 
- 
 </script>
 
 
@@ -14,6 +15,7 @@ const props = defineProps(['openDeleteModal'])
             <h3 class="font-bold text-lg text-error">Hola Que pasa</h3>
             <p class="py-4 text-warning">Are you sure that you want to delete the chat</p>
             <div class="modal-action">
+              
                 <button @click="$emit('deleteChat')" class="btn">Confirm</button>
                 <button @click="$emit('cancelDeleteChat')" class="btn">Cancel</button>
             </div>
